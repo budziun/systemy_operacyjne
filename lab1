@@ -3,3 +3,6 @@ login: s[nrindeksu]
 ctrl shift c do kopiowania
 wklejamy prawym przyciskiem 
 ctrl c przerywa operacje ?
+ls - wyswietla liste plikow w katalogu
+man i cos - wyswietla intstrukcje manulana polecenia - strzalkami nawigacja
+
