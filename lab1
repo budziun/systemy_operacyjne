@@ -6,3 +6,29 @@ ctrl c przerywa operacje ?
 ls - wyswietla liste plikow w katalogu
 man i cos - wyswietla intstrukcje manulana polecenia - strzalkami nawigacja
 
+passwd - komenda do zmiany hasła
+man [polecenie] - wyswietla intstrukcje manulana polecenia
+who - pokazuje kto jest zalogowany
+whoami - wypisuje efektywny identyfikator użytkownika
+ls - wypisuje zawartość katalogu
+pwd - wypisuje nazwę bieżącego katalogu roboczego
+tree - wyswietla strukture katalogow
+ls -l -  używa długiego formatu wyjściowego
+ls / - wyswietla zawartosc glownego katalogu systemu
+cd - zmienia katalog biezacy
+mkdir - tworzy katalog
+rmdir - usuwa pusty katalog
+rm - usuwa pliki lub katalogi
+exit - wyscie z aktulanej sesji powloki lub terminala 
+
+biezacy - "."
+nadrzedny - ".."
+glowny - "/"
+domowy - "~"
+
+jakie elementy ozanczaja ponizsze symbole
+- => plik zwykly
+d => katalog
+c => urzadzenie znakowe
+b => urzadzenie blokowe
+l => dowiazanie symboliczne
