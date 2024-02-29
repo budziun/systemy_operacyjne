@@ -1,3 +1,7 @@
 less - wyswietla plik 
 cat - wyswietla plik w terminalu 
 nano - edytor
+cp - kopiowanie folderu => cp -r dir1 dir2
+cp -i plik2 plik.txt dir3
+mv - przenoszenie pliku
+rm -rf dir2 - usuwanie wsztstkiego na sile
