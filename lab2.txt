@@ -1,0 +1,58 @@
+zad 1
+mkdir st_2024
+cd st_2024
+mkdir Dane
+mkdir Teksty
+mkdir Programy
+cd Teksty
+mkdir Listy
+mkdir Podania
+cd ..
+cd Programy
+mkdir C
+mkdir Shell
+cd Shell
+cd ..
+cd ..
+cd ..
+tree
+
+zad 2
+cd st_2024
+cd Teksty
+nano Zestawienie.txt
+# w pliku txt 
+#169224, data 29.02.2024 12:06, swieci slonce
+a)
+cp  Zestawienie.txt ~/st_2024/Programy/Shell/Skrypty
+cd ~/st_2024/Programy/Shell/Skrypty
+mv Zestawienie.txt spis24.txt
+b)
+less spis24.txt
+
+zad 3
+pwd
+
+zad 4 
+ln -s ~/st_2024/Dane ~/Odsylacz_Dane
+
+zad 5
+ln -s ~/st_2024/Podania ~/st_2024/Skrypty/Skrypty_Odsylacz
+
+zad 6
+ln -s ~/st_2024/Teksty/Zestawienie.txt ~/st_2024/Listy/DoZestawienia
+
+zad 7
+touch ~/st_2024/Listy/ListDoEwy.txt ~/st_2024/Listy/OlaChceKota.txt ~/st_2024/Listy/WielkieOczy.txt ~/st_2024/Listy/ToNieJestList ~/st_2024/Listy/list.txt
+
+zad 8
+mv ~/st_2024/Listy/*.txt ~/st_2024/Podania
+
+zad 10
+rm -r ~/st_2024/Programy
+
+zad 11
+cp ~/st_2024/*List* ~/st_2024/Listy
+
+zad 12
+find ~/st_2024 -type f -name "????" -delete
