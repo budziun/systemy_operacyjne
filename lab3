@@ -1,1 +1,35 @@
-test
+zad 1
+mkdir Notatki
+mkdir Przepisy
+mkdir Dane
+mkdir ~/Notatki/Kopie
+`echo "$(date +%A) /dev" > ~/Notatki/Zapiski.txt`
+zad 2
+`ln -s ~/Notatki/Zapiski.txt ~/Przepisy/Adzapisek`
+zad 3
+`chmod 744 ~/Notatki`
+`chmod 764 ~/Notatki/Zapiski.txt`
+`chmod 741 ~/Notatki/Zapiski.txt`
+zad 4
+`touch ~/Dane/Plik_testowy.txt`
+ls -l ~/Dane/Plik_testowy.txt
+zad 5
+ls -ld ~/Dane
+zad 6
+umask 0027
+zad 7
+`touch ~/Dane/plik1.txt && mkdir ~/Dane/Proba1`
+ls -l ~/Dane
+zad 8
+i-węzeły są strukturami opisującymi pliki w systemie które zawierają wszelkie infomracje związane z plikiem z wyłączeniem danych pliku oraz nazwy. Na danym systemie plików wszystkie i-węzły mają taką samą długość.
+zad 9
+ls -i ~/Notatki
+zad 10 
+> sprawdzic prawa do odczytu katalogu dane
+> sprawidzc prawa do odczytu dla Dane/plik1.txt
+> odczyt zawartości pliku 
+
+### plik lseek.c
+zad 1
+cat dane.txt
+zad 2
