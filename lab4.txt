@@ -1,0 +1,24 @@
+lab4
+zad1
+a.echo slonecznie 22 stopnie >> dane22 && ls -l >> dane22 & pwd >> dane22
+b.tree ~ > drzewo && cat dane22 drzewo > wynik
+c.cat dane22 drzewo wynik > razem
+d.who | wc -l
+e.find /home/domena/s169224 -type f | wc -l && find /home/domena/s169224 -mindepth 1 -type d | wc -l
+zad2
+a.find ~ -maxdepth 1 -type f -empty
+b.find /dev -type c | wc -l
+c.find ~ -type d -maxdepth 1 -perm /u=x
+d.find . -maxdepth 1 -type f \( -name '[a-f]*' -o -name "w*" \) -exec cat {} \;
+e.find ~ -maxdepth 3 -type f -mmin -30 -not -empty
+f.
+>find . -type f -amin -30
+>find . -type f -mmin -30
+>find . -type f -cmin -30
+zad3
+a. ls -l /dev | grep -c '^b'
+odp: 4
+b.find . -maxdepth 1 -type f \( -name "[a-f]*" -o -name "w*" \) -exec cat {} +
+c.
+find . -mindepth 2 -maxdepth 3 -type d
+find . -mindepth 2 -maxdepth 3 -type d | wc -l
