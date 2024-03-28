@@ -1,0 +1,16 @@
+a=6
+echo $a
+b=4
+c=$[$a+$b]
+echo $c
+
+ala = ala
+2 -eq 2 ruwne  =
+2 -lt 2 mniejsza liczba pierwsza <
+2 -le 2 <=
+2 -ne 2 nieruwne bolidy !=
+2 -gt 2 wieksza liczba pierwsza > 
+2 -ge 2 pierwsza wieksza liczba lub ruwna >=
+
+jedno zadanie z ifa w miare sensowne - sprawdzic czy znamy skladnie 
+
