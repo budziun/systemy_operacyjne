@@ -1,0 +1,219 @@
+skrypt piszemy w nano
+#!/bin/bash ->> potrzebne to na poczatku
+echo 'hello world!' 
+# komentarz tak sie robi
+aby otworzyc plik trzeba dac uprawnienia plikowi (chmod 755 nazwa_pliku)
+./'hello world' -> tak sie otwiera skrypt
+
+zad2
+ls -l | cut -d ' ' -f 1,6,9
+zad3 
+echo ${a:-plikZERO}
+zmienna="/home/jan23/Pliki/projekt1/Pliki/Dane"
+echo $zmienna 
+wynik:
+/home/jan23/Pliki/projekt1/Pliki/Dane
+
+echo ${#a} -> Wyświetli długość zawartości zmiennej a
+echo ${zmienna%Pliki*}: Usunie najkrótszy możliwy dopasowany sufiks od końca ciągu, który pasuje do wzorca "Pliki*", a następnie wyświetli wynik.
+echo ${zmienna%%Pliki*}: Usunie najdłuższy możliwy dopasowany sufiks od końca ciągu, który pasuje do wzorca "Pliki*", a następnie wyświetli wynik.
+echo ${zmienna#*Pliki}: Usunie najkrótszy możliwy dopasowany prefiks od początku ciągu, który pasuje do wzorca "*Pliki", a następnie wyświetli wynik.
+echo ${zmienna##*Pliki}: Usunie najdłuższy możliwy dopasowany prefiks od początku ciągu, który pasuje do wzorca "*Pliki", a następnie wyświetli wynik.
+
+zad4
+Zawartosc skryptu po otworzeniu 
+
+SKRPYT GLOWNY
+w Glownym k1= 33
+DZIALA FUN1
+w fun1 d22= 555
+ w fun1 k1= 33
+w Glownym d22= 555
+Glowny - koniec
+
+8.ZADANIA:
+zad1.
+sciezka="/home/jan23/Dane/Projekt_22/Dane/Pliki"
+a=${sciezka%%/Dane*}
+a=${sciezka#*Dane/}
+a=${sciezka%%/Dane*}
+reszta=${sciezka#"$a"}
+echo "Reszta: $reszta"
+a=${sciezka#*Dane/}
+reszta=${sciezka%"$a"}
+echo "Reszta: $reszta"
+dlugosc=${#sciezka}
+echo "Długość łańcucha: $dlugosc"
+b=${HOME:-/path/to/home}
+echo "Ścieżka dostępu do katalogu domowego: $b"
+Wynik:
+Ścieżka dostępu do katalogu domowego: /home/domena/s169224
+
+zad2. 
+main.sh:
+#!/bin/bash
+
+# Definiujemy funkcję lokalną w skrypcie głównym
+calculate() {
+    local suma=$(( $1 + $2 ))  # Obliczamy sumę
+    local iloczyn=$(( $1 * $2 ))  # Obliczamy iloczyn
+
+    # Wyświetlamy wyniki obliczeń
+    echo "Suma: $suma"
+    echo "Iloczyn: $iloczyn"
+}
+
+# Wywołujemy funkcję calculate i przekazujemy do niej parametry
+calculate "$@"
+
+chmod 755 main.sh
+./main.sh 10 5
+Wynik:
+Suma: 15
+Iloczyn: 50
+
+zad3.
+nano funkcje.sh
+
+#!/bin/bash
+
+# Definicja funkcji 1
+function function1 {
+    local zm1=11
+    bb1=$((bb1 + zm1))
+}
+
+# Definicja funkcji 2
+function function2 {
+    echo "Parametry przekazane do funkcji 2: $1, $2"
+    echo "Dodatkowe liczby przekazane do funkcji 2: 122, 34"
+}
+
+# Definicja funkcji 3
+function function3 {
+    local suma=$(( $1 + $2 ))
+    echo "$suma"
+}
+
+nano main1.sh
+
+#!/bin/bash
+
+# Ustawiamy zmienne globalne
+zm1=33
+bb1=7
+
+# Wywołujemy funkcję 1
+source functions.sh
+function1
+
+# Wyświetlamy wartość zmiennej bb1 po wykonaniu funkcji 1
+echo "Wartość zmiennej bb1 po wykonaniu funkcji 1: $bb1"
+
+# Wywołujemy funkcję 2 i przekazujemy jej dwa ostatnie parametry z linii poleceń oraz dwie dodatkowe liczby
+function2 "$2" "$3" 122 34
+
+# Wywołujemy funkcję 3 i przekazujemy jej dwie liczby, a następnie wyświetlamy zwróconą sumę
+suma=$(function3 10 20)
+echo "Suma obliczona w funkcji 3: $suma"
+
+chmod 755 main1.sh
+./main1.sh x y z
+
+zad4.
+nano skrypt2.sh
+
+#!/bin/bash
+
+# Sprawdzamy, czy podano poprawną liczbę argumentów
+if [ "$#" -ne 2 ]; then
+    echo "Użycie: $0 [1|2|3] nazwa_pliku_lub_katalogu"
+    exit 1
+fi
+
+# Wybieramy opcję na podstawie pierwszego parametru
+case $1 in
+    1)
+        # Opcja 1: sprawdzenie istnienia katalogu o podanej nazwie
+        if [ -d "$2" ]; then
+            echo "Usuwanie istniejącego katalogu $2"
+            rm -r "$2"
+        else
+            echo "Tworzenie katalogu $2"
+            mkdir "$2"
+        fi
+        ;;
+    2)
+        # Opcja 2: zapisanie do pliku wartości zmiennej $HOME
+        echo "$HOME" > "$2"
+        echo "Zapisano wartość zmiennej \$HOME do pliku $2"
+        ;;
+    3)
+        # Opcja 3: wywołanie odpowiedniej funkcji
+        function3() {
+            echo "FUNKCJA 3: Parametry przekazane do funkcji: $1, $2"
+            # Tutaj możesz dodać dowolną logikę dla funkcji 3
+        }
+        function3 "$2" "$HOME"
+        ;;
+    *)
+        echo "Nieprawidłowa opcja. Wybierz 1, 2 lub 3."
+        exit 1
+        ;;
+esac
+
+chmod 755 skrypt2.sh
+
+
+./skrypt2.sh 1 nazwa_katalogu
+Tworzenie katalogu nazwa_katalogu
+
+./skrypt2.sh 2 plik.txt
+Zapisano wartość zmiennej $HOME do pliku plik.txt
+
+./skrypt2.sh 3 parametr1 parametr2
+Użycie: ./skrypt2.sh [1|2|3] nazwa_pliku_lub_katalogu
+
+zad5.
+nano actions.sh
+
+#!/bin/bash
+
+# Pobieramy ścieżkę dostępu do katalogu bieżącego i zapisujemy ją do zmiennej a
+a=$(pwd)
+
+# Liczymy ilość zwykłych plików w katalogu domowym i zapisujemy do zmiennej b
+b=$(find "$HOME" -maxdepth 1 -type f | wc -l)
+
+# Wybieramy działanie na podstawie wartości wczytanej przez użytkownika
+read -p "Wybierz działanie (1 - utwórz plik 'Dane', 2 - policz podkatalogi w katalogu domowym do podpoziomu 3, 3 - wyświetl zawartość katalogu domowego): " option
+
+case $option in
+    1)
+        # Tworzymy na nowo plik o nazwie "Dane" i zapisujemy strukturę katalogu domowego
+        echo "Tworzenie pliku 'Dane' i zapisywanie struktury katalogu domowego..."
+        tree "$HOME" > "$a/Dane"
+        echo "Zapisano strukturę katalogu domowego do pliku 'Dane'"
+        ;;
+    2)
+        # Liczymy podkatalogi w katalogu domowym do podpoziomu 3
+        echo "Liczenie podkatalogów w katalogu domowym do podpoziomu 3..."
+        subdirs=$(find "$HOME" -mindepth 1 -maxdepth 3 -type d | wc -l)
+        echo "Liczba podkatalogów w katalogu domowym do podpoziomu 3: $subdirs"
+        ;;
+    3)
+        # Wyświetlamy zawartość katalogu domowego
+        echo "Zawartość katalogu domowego:"
+        ls -l "$HOME"
+        ;;
+    *)
+        echo "Nieprawidłowy wybór."
+        ;;
+esac
+
+chmod 755 actions.sh
+./actions.sh
+
+Wybierz działanie (1 - utwórz plik 'Dane', 2 - policz podkatalogi w katalogu domowym do podpoziomu 3, 3 - wyświetl zawartość katalogu domowego): 2
+Liczenie podkatalogów w katalogu domowym do podpoziomu 3...
+Liczba podkatalogów w katalogu domowym do podpoziomu 3: 16
