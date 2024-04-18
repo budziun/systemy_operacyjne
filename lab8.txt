@@ -1,0 +1,348 @@
+zadania z pliku Konstrukcja wielokrotnego wyboru.pdf
+
+#!/bin/bash
+
+#zad1
+echo "Liczby od 10 do 35:"
+num=10
+while [ $num -le 35 ]; do
+    echo $num
+    ((num++))
+done
+
+echo "Liczby od 35 do 10 (w odwrotnej kolejności):"
+num=35
+until [ $num -lt 10 ]; do
+    echo $num
+    ((num--))
+done
+
+#zad2
+echo "Liczba podkatalogów w bieżącym katalogu:"
+count=0
+for dir in */; do
+    echo $dir
+    ((count++))
+done
+echo "Łącznie $count podkatalogów."
+
+# zad3
+echo "Liczba plików w bieżącym katalogu zaczynających się na 'a':"
+count_a=$(find . -maxdepth 1 -type f -name "a*" | wc -l)
+echo $count_a
+
+echo "Liczba plików w katalogu domowym z nazwami 6-znakowymi, gdzie trzecim znakiem jest 'a':"
+count_b=$(find ~/ -maxdepth 1 -type f -name "??a???" | wc -l)
+echo $count_b
+
+#zad4
+echo "Nazwy plików z ustawionymi prawami dostępu x:"
+find . -maxdepth 1 -type f -perm /u=x,g=x,o=x -exec basename {} \;
+
+#zad5
+regular_files=$(find ~/ -maxdepth 1 -type f | wc -l)
+echo "Liczba plików zwykłych w katalogu domowym: $regular_files"
+
+subdirectories=$(find ~/ -maxdepth 1 -type d | wc -l)
+echo "Liczba podkatalogów w katalogu domowym: $subdirectories"
+
+zero_size_files=$(find ~/ -maxdepth 1 -type f -size 0 | wc -l)
+echo "Liczba plików zerowych w katalogu domowym: $zero_size_files"
+
+#zad6
+echo "Loginy i adresy IP obecnie zalogowanych użytkowników:"
+who | cut -d' ' -f1,5 --output-delimiter=' ' | tr -s ' '
+
+^ lab08.sh
+chmod 755 lab08.sh
+./lab08.sh
+
+zadania z pliku Cw_8.pdf
+
+zad1
+#!/bin/bash
+
+las=false
+a1=false
+
+for param in "$@"; do
+    if [ "$param" == "las" ]; then
+        las=true
+    elif [ "$param" == "a1" ]; then
+        a1=true
+    fi
+done
+
+if [ "$a1" = true ]; then
+    echo "Parametr 'a1' został podany. Liczenie ilości zwykłych plików w katalogu domowym..."
+    count=$(find ~ -maxdepth 1 -type f | wc -l)
+    echo "Ilość zwykłych plików w katalogu domowym: $count"
+fi
+
+if [ "$las" = true ]; then
+    echo "Parametr 'las' został podany."
+fi
+
+s169224@orfi:~/Cw_8$ chmod 755 zad1.sh
+s169224@orfi:~/Cw_8$ ./zad1.sh las a1
+
+zad2
+#!/bin/bash
+
+if [ "$#" -lt 3 ]; then
+    echo "Za mało parametrów."
+    exit 11
+elif [ "$#" -eq 3 ]; then
+    touch "$2"
+    ls -l ~ > "$2"
+    echo "Utworzono plik '$2' i zapisano zawartość katalogu domowego."
+    exit 55
+else
+    directories=$(find . -maxdepth 3 -type d | wc -l)
+    echo "Ilość podkatalogów do trzeciego poziomu zagłębienia: $directories"
+    exit 22
+f
+
+s169224@orfi:~/Cw_8$ chmod 755 zad2.sh
+
+s169224@orfi:~/Cw_8$ ./zad2.sh plik.txt
+Za mało parametrów.
+
+s169224@orfi:~/Cw_8$ ./zad2.sh 1 plikk 3
+Utworzono plik 'plikk' i zapisano zawartość katalogu domowego.
+
+s169224@orfi:~/Cw_8$ ./zad2.sh 1 plikk 3 54 5 6 8
+Ilość podkatalogów do trzeciego poziomu zagłębienia: 1
+
+zad3
+#!/bin/bash
+
+if [ "$#" -ne 1 ]; then
+    echo "Podaj nazwę pliku jako parametr."
+    exit 1
+fi
+
+filename=$1
+
+if [ ! -e "$filename" ]; then
+    echo "Plik '$filename' nie istnieje."
+    exit 1
+fi
+
+echo "Pliki o rozmiarze większym niż 150B w katalogu bieżącym:"
+find . -maxdepth 1 -type f -size +150c -exec basename {} \;
+
+
+s169224@orfi:~/Cw_8$ ./zad3.sh plikk
+Pliki o rozmiarze większym niż 150B w katalogu bieżącym:
+plikk
+zad2.sh
+zad3.sh
+zad1.sh
+
+zad4
+#!/bin/bash
+
+if [ "$#" -lt 2 ]; then
+    echo "Podaj co najmniej dwa parametry."
+    exit 1
+fi
+
+first_param="$1"
+
+count=0
+for param in "${@:2}"; do
+    if [ "$param" == "$first_param" ]; then
+        ((count++))
+    fi
+done
+
+echo "Liczba wystąpień '$first_param' wśród pozostałych parametrów: $count"
+
+s169224@orfi:~/Cw_8$ ./zad4.sh a b c a d a d a c d a
+Liczba wystąpień 'a' wśród pozostałych parametrów: 4
+
+zad5
+#!/bin/bash
+
+script_name=$(basename "$0")
+
+read -p "Podaj wyraz: " input_word
+
+if [ "$input_word" = "$script_name" ]; then
+    echo "Wczytany wyraz jest równy nazwie uruchomionego skryptu: $script_name."
+else
+    echo "Wczytany wyraz nie jest równy nazwie uruchomionego skryptu ($script_name)."
+fi
+
+s169224@orfi:~/Cw_8$ ./zad5.sh
+Podaj wyraz: zad4
+Wczytany wyraz nie jest równy nazwie uruchomionego skryptu (zad5.sh).
+s169224@orfi:~/Cw_8$ ./zad5.sh
+Podaj wyraz: zad5.sh
+Wczytany wyraz jest równy nazwie uruchomionego skryptu: zad5.sh.
+
+zad6
+#!/bin/bash
+
+if [ "$#" -eq 0 ]; then
+    echo "Brak parametrów."
+    exit 17
+fi
+
+
+echo "Ilość parametrów: $#"
+
+if [ "$#" -gt 3 ]; then
+    echo "Pierwszy parametr: $1"
+    echo "Trzeci parametr: $3"
+    if [ "$1" = "$3" ]; then
+        echo "Pierwszy i trzeci parametr są sobie równe."
+    else
+        echo "Pierwszy i trzeci parametr nie są sobie równe."
+    fi
+else
+    echo "Liczba parametrów jest mniejsza lub równa 3."
+    exit 17
+fi
+
+s169224@orfi:~/Cw_8$ ./zad6.sh 1 3 1 4
+Ilość parametrów: 4
+Pierwszy parametr: 1
+Trzeci parametr: 1
+
+zad7
+#!/bin/bash
+
+param_count=$#
+
+if [ $param_count -gt 4 ]; then
+    echo "Ilość parametrów jest większa od 4."
+    exit 25
+fi
+
+if [ $param_count -eq 1 ] && [ "$1" = "drzewo" ]; then
+    tree .
+    exit 0
+fi
+
+if [ $param_count -eq 1 ] && [ "$1" = "zwykle" ]; then
+    echo "Nazwy plików zwykłych z katalogu bieżącego:"
+    ls -p | grep -v /  # Wyświetla tylko pliki, omijając katalogi
+    exit 0
+fi
+
+echo "Numer procesu: $$"
+exit 123
+
+
+s169224@orfi:~/Cw_8$ ./zad7.sh
+Numer procesu: 1542848
+s169224@orfi:~/Cw_8$ ./zad7.sh drzewo
+.
+├── plikk
+├── zad1.sh
+├── zad2.sh
+├── zad3.sh
+├── zad4.sh
+├── zad5.sh
+├── zad6.sh
+└── zad7.sh
+
+0 directories, 8 files
+s169224@orfi:~/Cw_8$ ./zad7.sh zwykle
+Nazwy plików zwykłych z katalogu bieżącego:
+plikk
+zad1.sh
+zad2.sh
+zad3.sh
+zad4.sh
+zad5.sh
+zad6.sh
+zad7.sh
+s169224@orfi:~/Cw_8$ ./zad7.sh param1 param2 param3
+Numer procesu: 1542889
+s169224@orfi:~/Cw_8$ ./zad7.sh param1 param2 param3 param4 param5
+Ilość parametrów jest większa od 4.
+
+zad8
+#!/bin/bash
+
+echo "Katalog domowy użytkownika: $HOME"
+
+logged_in_users=$(who | wc -l)
+echo "Liczba użytkowników zalogowanych w tej chwili: $logged_in_users"
+
+s169224@orfi:~/Cw_8$ ./zad8.sh
+Katalog domowy użytkownika: /home/domena/s169224
+Liczba użytkowników zalogowanych w tej chwili: 15
+
+zad9
+#!/bin/bash
+
+if [ "$#" -eq 0 ]; then
+    echo "Brak parametrów."
+    exit 1
+fi
+
+if [ "$1" = "dwa" ]; then
+    echo "Dzisiejsza data: $(date +%Y-%m-%d)"
+    exit 0
+fi
+
+if [ "$#" -eq 2 ]; then
+    # Sprawdzenie czy w bieżącym katalogu istnieje plik o nazwie jak drugi parametr
+    if [ -f "$2" ]; then
+        echo "Plik '$2' istnieje w bieżącym katalogu."
+    else
+        echo "Plik '$2' nie istnieje w bieżącym katalogu."
+    fi
+else
+    echo "Liczba parametrów nie jest równa 2."
+    exit 1
+fi
+
+s169224@orfi:~/Cw_8$ ./zad9.sh dwa
+Dzisiejsza data: 2024-04-18
+s169224@orfi:~/Cw_8$ ./zad9.sh plik.txt
+Liczba parametrów nie jest równa 2.
+
+zad10
+#!/bin/bash
+
+if [ "$#" -eq 0 ]; then
+    echo "Brak parametrów."
+    exit 1
+fi
+
+if [ "$1" = "dwa" ]; then
+    echo "Dzisiejsza data: $(date +%Y-%m-%d)"
+    exit 0
+fi
+
+if [ "$#" -eq 2 ]; then
+    # Sprawdzenie czy drugi parametr jest równy "tworz"
+    if [ "$2" = "tworz" ]; then
+        # Wczytanie nazwy pliku
+        read -p "Podaj nazwę pliku do utworzenia: " filename
+        # Utworzenie pliku z nazwą podaną przez użytkownika i dopisanie do niego PID - nr procesu
+        echo "PID - nr procesu: $$" >> "$filename"
+        echo "Plik '$filename' został utworzony i dopisano do niego PID - nr procesu."
+    else
+        if [ -f "$2" ]; then
+            echo "Plik '$2' istnieje w bieżącym katalogu."
+        else
+            echo "Plik '$2' nie istnieje w bieżącym katalogu."
+        fi
+    fi
+else
+    echo "Liczba parametrów nie jest równa 2."
+    exit 1
+fi
+
+s169224@orfi:~/Cw_8$ ./zad10.sh 1 tworz
+Podaj nazwę pliku do utworzenia: plikson
+Plik 'plikson' został utworzony i dopisano do niego PID - nr procesu.
+
+
+
