@@ -1,0 +1,164 @@
+Napisz i uruchom skrypt, wykorzystaj wartości parametrów podane przy uruchomieniu
+- dwa pierwsze - nazwy podkatalogów, które trzeba utworzyć w katalogu domowym,
+trzeci - nazwa pliku, do którego trzeba zapisać inf. o uruchomionych procesach.
+#!/bin/bash
+echo skrypt
+echo Wczytano: $*
+echo katalogi do utworzenia: $1, $2
+cd ~
+mkdir -p $1 $2
+ps > $3
+
+Napisz i uruchom skrypt, po uruchomieniu wczyta nazwę pliku, który należy wyszukać
+w bieżącym katalogu, jeżeli go brak wyświetl komunikat, jeżeli jest - wyświetlić jego
+zawartość.
+
+#!/bin/bash e
+cho skrypt
+echo -n Podaj nazwe pliku: 
+read plik
+echo Podana nazwa to: $plik 
+if find. -name $plik 
+then
+echo JEST jego zawartosc: 
+cat $plik
+else echo BRAK
+fi
+
+Napisz i uruchom skrypt, który wczyta frazę. Następnie wyszuka w plikach zawartych
+w katalogu, nazwę którego również należy wczytać.
+
+#!/bin/bash
+echo skrypt
+echo Katalog biezacy= $(pwd)
+echo Podaj nazwę katalogu do przeszukania 
+echo -ze ścieżką od katalogu domowego:
+read kat
+echo Podana nazwa to: $kat
+cd ~/$kat
+echo Padaj szukaną frazę:
+read fraza
+grep "$fraza" *
+
+Napisz i uruchom skrypt, który policzyć, ile jest uruchomionych procesów, ile jest
+podkatalogów w podanym katalogu w podanym (do jakiego w głąb) zakresie poziomów
+
+#!/bin/bash 
+echo skrypt
+echo W tej chwili jest uruchomionych $(ps -A wc -1) procesów
+echo Podaj katalog do przeszukania:
+read Skat
+echo Podaj do jakiego poziomu przeszukujemy:
+read poziom
+echo Wynik przeszukiwania - katalog zawiera \
+$(find $kat -maxdepth $poziom -type d wc -l) podkatalogow
+
+Napisz i uruchom skrypt w którym będzie możliwość wybrania jednej z kilku
+możliwych opcji - opcje: a,b,c,d lub 1,2,3 itp., w zależności od wybranej opcji skrypt
+będzie wykonywał stosowne działania - polecenia shella, np. – wariant a,b,c,d –
+odpowiednio: uruchomić tree, pwd, ls oraz ps, komunikat „Opcja d”, dla pozostałych
+przypadków – komunikat „INNA opcja”
+
+#!/bin/bash echo skrypt
+echo Są cztery opcje - a,b,c,d 
+echo Wybierz jedną z nich: 
+read zm
+case "$zm" in
+a) tree;;
+b) pwd;;
+c) ls; ps;;
+d) echo Opcja d;;
+*) echo INNA opcja;; 
+esac
+
+Napisz i uruchom skrypt, który wyszukuje zwykłe pliki w katalogu, którego nazwa jest
+wczytywana po uruchomieniu, podlicza, ile ich jest, sprawdza które z nich zawierają
+wiersze z wyrażeniem "for i".
+
+#!/bin/bash
+echo Działa skrypt skr111
+echo skrypt wczytuje nazwe katalogu 
+echo wyszukuje w nim zwykłe pliki, 
+echo podlicza ile ich jest
+echo wyszukuje nazwy tych, które
+echo zawierają frazę "for i"
+ilePl=0
+read -p "Wpisz ścieżkę z katalogiem do przeszukania:" k 
+if [ -e $k]
+	then
+		for i in $k/*
+		do
+			if [ -f "$i" ]; then echo $i; ilePl=$ [$ilePl+1]; fi 
+			done
+	echo plików zwykłych jest: $ilepl
+	grep "for i" $k/*
+else
+	echo brak ktakiego katalogu
+fi
+
+
+#!/bin/bash
+
+# Sprawdzenie czy podano nazwę katalogu jako argument
+if [ "$#" -ne 1 ]; then
+    echo "Podaj nazwę katalogu (pełna ścieżka) jako argument."
+    exit 1
+fi
+
+# Wczytanie nazwy katalogu
+directory="$1"
+
+# Sprawdzenie czy podany argument jest katalogiem
+if [ ! -d "$directory" ]; then
+    echo "$directory nie jest katalogiem."
+    exit 1
+fi
+
+
+Napisz i uruchom skrypt, który wczytuje nazwę katalogu (pełna ścieżka), następnie
+podlicza, ile jest w nim plików:
+• o nazwach zaczynających się na literę b,
+• o nazwach zaczynających się na jedną z liter: k, m, p,
+• sześcioznakowych zaczynających się na d,
+• przynajmniej 5-znakowych (druga litera s, bez pierwszych liter: b,k,m,p,d).
+# Podliczanie plików spełniających kryteria
+b_files=$(find "$directory" -type f -name "b*" | wc -l)
+kmp_files=$(find "$directory" -type f \( -name "k*" -o -name "m*" -o -name "p*" \) | wc -l)
+d_six_char_files=$(find "$directory" -type f -name "d?????" | wc -l)
+second_s_files=$(find "$directory" -type f -regex ".*/[^bkmprd][sS].*" | wc -l)
+
+# Wyświetlanie wyników
+echo "Liczba plików w katalogu '$directory':"
+echo "  - Pliki zaczynające się na literę 'b': $b_files"
+echo "  - Pliki zaczynające się na jedną z liter 'k', 'm', 'p': $kmp_files"
+echo "  - Pliki sześcioznakowe zaczynające się na 'd': $d_six_char_files"
+echo "  - Pliki przynajmniej 5-znakowe (druga litera 's', bez pierwszych liter: b, k, m, p, d): $second_s_files"
+
+12. Napisz skrypt, który podczas uruchomienia pobierze parametr nazwę pliku
+• jeżeli jest ona równa nazwie wykonywanego skryptu to skrypt wyświetla
+informację o wszystkich plikach katalogu domowego, mających uprawnienia
+rwx dla właściciela i zapisuje je do pliku o nazwie podanej jako drugi parametr
+skryptu,
+• jeżeli nie to wyszukuje wszystkie procesy, które są potomne od procesu „init”,
+wyświetla informację o nich i podlicza – ile ich jest.
+#!/bin/bash
+
+# Sprawdzenie czy podano dwa parametry
+if [ "$#" -ne 1 ]; then
+    echo "Podaj nazwę pliku jako parametr."
+    exit 1
+fi
+
+# Nazwa pliku
+file_name="$1"
+
+# Sprawdzenie czy nazwa pliku jest równa nazwie wykonywanego skryptu
+if [ "$file_name" = "$(basename "$0")" ]; then
+    # Wyszukanie plików w katalogu domowym z uprawnieniami rwx dla właściciela
+    echo "Pliki w katalogu domowym z uprawnieniami rwx dla właściciela:"
+    find "$HOME" -type f -perm -700 -exec ls -l {} +
+else
+    # Wyszukanie procesów potomnych od procesu "init"
+    echo "Procesy potomne od procesu 'init':"
+    pstree -p init | grep -oP '\(\K\d+'
+fi
